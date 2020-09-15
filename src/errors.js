@@ -16,3 +16,15 @@ export class HttpError extends Error {
     this.name = "HttpError";
   }
 }
+
+export class MultipleError extends Error {
+  constructor(data, status) {
+    const message = data.errors[0].detail;
+    super(message);
+
+    this.message = message;
+    this.status = status;
+    this.name = "HttpError";
+    this.errors = data.errors;
+  }
+}

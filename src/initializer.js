@@ -1,14 +1,14 @@
-import axios from 'axios';
-import { HttpError } from './errors';
+import axios from "axios";
+import { MultipleError } from "./errors";
 
 // Handle HTTP errors.
 export default () => {
   // Request interceptor
   axios.interceptors.request.use(
     (config) => {
-      const token = localStorage.getItem('token');
-      const username = localStorage.getItem('username');
-      const password = localStorage.getItem('password');
+      const token = localStorage.getItem("token");
+      const username = localStorage.getItem("username");
+      const password = localStorage.getItem("password");
 
       const newConfig = config;
 
@@ -25,22 +25,20 @@ export default () => {
 
       return newConfig;
     },
-    err => Promise.reject(err),
+    (err) => Promise.reject(err)
   );
 
   // Response interceptor
   axios.interceptors.response.use(
-    response => response,
+    (response) => response,
     (error) => {
       const { status, data } = error.response;
 
       if (status < 200 || status >= 300) {
-        return Promise.reject(
-          new HttpError(data, status),
-        );
+        return Promise.reject(new MultipleError(data, status));
       }
 
       return Promise.reject(error);
-    },
+    }
   );
 };
