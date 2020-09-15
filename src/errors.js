@@ -3,7 +3,7 @@ export class NotImplementedError extends Error {
     super(message);
 
     this.message = message;
-    this.name = 'NotImplementedError';
+    this.name = "NotImplementedError";
   }
 }
 
@@ -13,6 +13,6 @@ export class HttpError extends Error {
 
     this.message = message;
     this.status = status;
-    this.name = 'HttpError';
+    this.name = "HttpError";
   }
 }
